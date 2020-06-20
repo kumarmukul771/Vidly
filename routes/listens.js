@@ -11,35 +11,38 @@ const post = require("../models/post");
 const comment = require("../models/comment");
 const like = require("../models/like");
 
-// Create route for likes and dislikes
+// Create route for listen counts
 router.post("/", auth, function (req, res) {
+
   // Find Post using post id which is provided in req.body.post
   post.findById(req.body.post, function (err, foundPost) {
     if (err) console.log(err);
     else {
-      //Find whether logged in user has already liked the post
-      let index = foundPost.likes.findIndex((userId) => userId == req.user._id);
+      //Find whether logged in user has already listened
+      let index = foundPost.listens.findIndex((userId) => userId == req.user._id);
 
       if (index == -1) {
         // Listen post if user already not listened to it
-        foundPost.likes.push(req.user._id);
+        foundPost.listens.push(req.user._id);
         foundPost.save();
+
         let liked = {
-          liked: "1",
+          listened: "1",
         };
-        res.send(liked);
+
+        res.send(foundPost);
       } else {
         // No effect if already listened
         // let updatedLikes = foundPost.likes.filter((userId) => {
         //   return !(userId == req.user._id);
         // });
-        let response = {
-          liked: "1",
+        let liked = {
+          listened: "1",
         };
 
         // foundPost.likes = updatedLikes;
         // foundPost.save();
-        res.send(liked);
+        res.send(foundPost);
       }
     }
   });
@@ -56,7 +59,7 @@ router.get("/", auth, (req, res) => {
       res.send(error);
     } else {
       let count = {
-        count: foundPost.likes.length,
+        count: foundPost.listens.length,
       };
 
       res.send(count);

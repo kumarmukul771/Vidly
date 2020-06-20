@@ -11,6 +11,18 @@ const postSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  listens: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  claps: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,

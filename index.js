@@ -12,6 +12,8 @@ const posts = require("./routes/posts");
 const express = require("express");
 const comments = require("./routes/comments");
 const likes = require("./routes/likes");
+const listens = require("./routes/listens");
+const totalListens = require("./routes/totalListens");
 const app = express();
 
 if (!config.get("jwtPrivateKey")) {
@@ -34,6 +36,8 @@ app.use("/api/auth", auth);
 app.use("/api/posts", posts);
 app.use("/api/comments", comments);
 app.use("/api/likes", likes);
+app.use("/api/listens", listens);
+app.use("/api/totalListens",totalListens);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
